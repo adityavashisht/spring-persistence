@@ -45,6 +45,13 @@ public class CustomerProfileTest {
     }
 
     @Test
+    public void testFetchWithMapper() {
+
+        CustomerProfile profile = customerProfileDao.withCustomMapper(4L);
+        Assert.notNull(profile);
+    }
+
+    @Test
     public void testAll() {
 
         List<CustomerProfile> profiles = customerProfileDao.getAll();

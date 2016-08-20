@@ -42,6 +42,18 @@ public class CustomerProfileDao extends JdbcDaoSupport {
     }
 
 
+    public CustomerProfile withCustomMapper(Long id) {
+
+
+        final String SELECT = "select customer_profile_id as id, email as email from customer_profile where customer_profile_id = ?";
+
+        CustomerProfile profile = getJdbcTemplate().queryForObject(SELECT, new Object[]{id},
+                new CustomerProfileRowMapper());
+
+        return profile;
+
+    }
+
     public CustomerProfile customerProfile(Long id) {
 
         final String SELECT = "select customer_profile_id as id, email as email from customer_profile where customer_profile_id = ?";
