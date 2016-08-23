@@ -2,19 +2,22 @@ package com.spring.persistence.services;
 
 import com.spring.persistence.dao.CustomerDao;
 import com.spring.persistence.domain.CustomerProfile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by vashishta on 8/23/16.
  */
+@Component("customerService")
+
 public class CustomerServiceImpl implements CustomerService {
 
+    @Autowired
     private CustomerDao customerDao;
 
-    public void setCustomerDao(CustomerDao customerDao) {
-        this.customerDao = customerDao;
-    }
 
 
     // Transactions to be started here - starts when the method is invoked

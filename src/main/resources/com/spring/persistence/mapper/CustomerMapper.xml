@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.persistence.mapper.CustomerMapper">
+
+    <select id="getById"
+            parameterType="map"
+            resultType="com.spring.persistence.domain.CustomerProfile">
+
+        select
+        customer_profile_id as id,
+        email as email
+
+        from customer_profile
+        where customer_profile_id = #{abc}
+
+
+
+    </select>
+
+
+    <select id="search"
+            parameterType="map"
+            resultType="com.spring.persistence.domain.CustomerProfile">
+
+        select
+        customer_profile_id as id,
+        email as email
+
+        from customer_profile
+
+        where 1 = 1
+
+        <choose>
+            <when test="{searchCriteria.getFirstName() !=null } and  {searchCriteria.getLastName() !=null }">
+                <if test="{searchCriteria.getFirstName() !=null }">
+
+                    AND
+                    first_name = #{searchCriteria.firstName}
+
+
+                </if>
+
+                <if test="{searchCriteria.getLastName() !=null }">
+                    AND
+                    last_name = #{searchCriteria.lastName}
+
+                </if>
+
+            </when>
+            <otherwise>
+                <if test="{searchCriteria.getEmail() !=null}">
+                    AND
+                    email = #{searchCriteria.email}
+                </if>
+            </otherwise>
+
+        </choose>
+
+
+
+
+
+
+
+    </select>
+
+
+</mapper>

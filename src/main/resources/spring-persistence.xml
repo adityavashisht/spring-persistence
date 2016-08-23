@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
     <bean id="dataSource"
@@ -12,12 +13,37 @@
         <property name="url" value="jdbc:postgresql://localhost:5432/spring" />
     </bean>
 
-    <bean id="customerDao" class="com.spring.persistence.dao.CustomerDaoImpl">
+    <context:component-scan base-package="com.spring"/>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="customerService" class="com.spring.persistence.services.CustomerServiceImpl">
-        <property name="customerDao" ref="customerDao"/>
+    <bean id="mybatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+
+        <property name="mapperLocations"
+                  value="classpath*:com/spring/persistence/**/*.xml"/>
+
+        <property name="plugins">
+            <array>
+                <bean class="com.spring.persistence.common.profiler.MyBatisQueryProfiler"/>
+            </array>
+        </property>
+
+        <property name="transactionFactory">
+            <bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory"/>
+        </property>
+
     </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="mybatisSqlSessionFactory"/>
+        <property name="basePackage"
+                  value="com.spring.persistence.mapper"/>
+    </bean>
+
+
 
 </beans>

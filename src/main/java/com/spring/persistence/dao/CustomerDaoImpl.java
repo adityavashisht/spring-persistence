@@ -2,18 +2,28 @@ package com.spring.persistence.dao;
 
 import com.spring.persistence.domain.CustomerProfile;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.sql.DataSource;
 import java.util.List;
 
 
 /**
  * Created by vashishta on 8/20/16.
  */
+@Component
 public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao {
 
+
+    @Autowired
+    public CustomerDaoImpl(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     public void createProfile(CustomerProfile customerProfile) {
 
@@ -78,4 +88,13 @@ public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao {
         return profiles;
 
     }
+
+
+    @PostConstruct
+    public void init() {
+        if(getDataSource() == null) {
+            throw new IllegalArgumentException("Datasource must be provided");
+        }
+    }
+
 }
