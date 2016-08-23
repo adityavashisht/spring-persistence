@@ -23,6 +23,10 @@ public class MybatisCustomerService {
     }
 
     public List<CustomerProfile> search(SearchCriteria searchCriteria) {
-        return  customerMapper.search(searchCriteria);
+        return customerMapper.search(searchCriteria);
+    }
+
+    public void create(CustomerProfile customerProfile) {
+        customerMapper.createProfile(customerProfile);
     }
 }

@@ -60,12 +60,31 @@
         </choose>
 
 
-
-
-
-
-
     </select>
+
+
+    <insert id="createProfile"
+            keyColumn="customer_profile_id"
+            parameterType="map"
+
+            keyProperty="id">
+
+        <selectKey keyProperty="customerProfile.id" resultType="long" order="BEFORE">
+            select nextval('customer_profile_seq')
+        </selectKey>
+
+        insert into customer_profile
+        (customer_profile_id, email, first_name, last_name, street, city)
+        values (
+        #{customerProfile.id},
+        #{customerProfile.email},
+        #{customerProfile.firstName},
+        #{customerProfile.lastName},
+        #{customerProfile.street},
+        #{customerProfile.city}
+        )
+
+    </insert>
 
 
 </mapper>

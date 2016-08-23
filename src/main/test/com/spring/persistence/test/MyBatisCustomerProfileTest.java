@@ -46,4 +46,16 @@ public class MyBatisCustomerProfileTest {
     }
 
 
+    @Test
+    public void createNew() {
+        CustomerProfile customerProfile = new CustomerProfile();
+        customerProfile.setFirstName("Mybatis");
+        customerProfile.setLastName("Vashisht");
+        customerProfile.setEmail("aditya@indasil.com");
+        customerProfile.setStreet("Bloomfield");
+        customerProfile.setCity("Chantilly");
+
+        mybatisCustomerService.create(customerProfile);
+    }
+
 }

@@ -13,5 +13,17 @@ public interface CustomerMapper {
 
     CustomerProfile getById(@Param("abc") Long id);
 
+    /**
+     *
+     * @param searchCriteria
+     * @return CustomerProfile
+     */
     List<CustomerProfile> search(@Param("searchCriteria") SearchCriteria searchCriteria);
+
+
+    /**
+     *
+     * @param customerProfile
+     */
+    void createProfile(@Param("customerProfile") CustomerProfile customerProfile);
 }
