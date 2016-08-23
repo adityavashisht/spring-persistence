@@ -1,7 +1,9 @@
 package com.spring.persistence.test;
 
-import com.spring.persistence.dao.CustomerProfileDao;
+import com.spring.persistence.dao.CustomerDao;
+import com.spring.persistence.dao.CustomerDaoImpl;
 import com.spring.persistence.domain.CustomerProfile;
+import com.spring.persistence.services.CustomerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,7 +23,7 @@ public class CustomerProfileTest {
 
 
     @Autowired
-    private CustomerProfileDao customerProfileDao;
+    private CustomerService customerService;
 
     @Test
     public void testProfile() {
@@ -33,28 +35,28 @@ public class CustomerProfileTest {
         customerProfile.setStreet("Bloomfield");
         customerProfile.setCity("Ashburn");
 
-        customerProfileDao.createProfile(customerProfile);
+        customerService.createProfile(customerProfile);
 
     }
 
     @Test
     public void testFetch() {
 
-        CustomerProfile profile = customerProfileDao.customerProfile(4L);
+        CustomerProfile profile = customerService.customerProfile(4L);
         Assert.notNull(profile);
     }
 
     @Test
     public void testFetchWithMapper() {
 
-        CustomerProfile profile = customerProfileDao.withCustomMapper(4L);
+        CustomerProfile profile = customerService.withCustomMapper(4L);
         Assert.notNull(profile);
     }
 
     @Test
     public void testAll() {
 
-        List<CustomerProfile> profiles = customerProfileDao.getAll();
+        List<CustomerProfile> profiles = customerService.getAll();
         Assert.notEmpty(profiles);
     }
 }

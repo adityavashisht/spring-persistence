@@ -12,8 +12,12 @@
         <property name="url" value="jdbc:postgresql://localhost:5432/spring" />
     </bean>
 
-    <bean id="customerProfileDao" class="com.spring.persistence.dao.CustomerProfileDao">
+    <bean id="customerDao" class="com.spring.persistence.dao.CustomerDaoImpl">
         <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="customerService" class="com.spring.persistence.services.CustomerServiceImpl">
+        <property name="customerDao" ref="customerDao"/>
     </bean>
 
 </beans>

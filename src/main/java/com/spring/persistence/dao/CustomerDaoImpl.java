@@ -3,7 +3,7 @@ package com.spring.persistence.dao;
 import com.spring.persistence.domain.CustomerProfile;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
+
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by vashishta on 8/20/16.
  */
-public class CustomerProfileDao extends JdbcDaoSupport {
+public class CustomerDaoImpl extends JdbcDaoSupport implements CustomerDao {
 
 
     public void createProfile(CustomerProfile customerProfile) {
@@ -45,7 +45,10 @@ public class CustomerProfileDao extends JdbcDaoSupport {
     public CustomerProfile withCustomMapper(Long id) {
 
 
-        final String SELECT = "select customer_profile_id as id, email as email from customer_profile where customer_profile_id = ?";
+        final String SELECT = "select customer_profile_id as id, email as email from customer_profile where customer_profile_id = ?"
+                 + " "
+                  + " "
+                ;
 
         CustomerProfile profile = getJdbcTemplate().queryForObject(SELECT, new Object[]{id},
                 new CustomerProfileRowMapper());
